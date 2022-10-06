@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=<device-width>, initial-scale=1.0">
+    <title>Bar graph</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css">
+
+</head>
+<body>
+    <center>
+        <label ></label>
+        <div class="input-tab">
+            <form method="post">
+                {% csrf_token %}
+                <div class="container">
+            <select id="dropdown" class="form-control" name="site" required multiple>
+                <option disabled value selected>Select an option</option>
+                <ul class="dropdown-menu dropdown-menu-dark">
+                    <option><a class="dropdown-item active"  >Ahmedabad</a></option>
+                    <option><a class="dropdown-item"  >Amreoption</a></option>
+                    <option><a class="dropdown-item"  >Anand</a></option>
+                    <option><a class="dropdown-item"  >Bharuch</a></option>
+                    <option><a class="dropdown-item"  >Bhavnagarn</a></option>
+                    <option><a class="dropdown-item"  >Bhujn</a></option>
+                    <option><a class="dropdown-item"  >Botad</a></option>
+                    <option><a class="dropdown-item"  >Dahod</a></option>
+                    <option><a class="dropdown-item"  >Deesa</a></option>
+                    <option><a class="dropdown-item"  >Gandhidham</a></option>
+                    <option><a class="dropdown-item"  >Gandhinagar</a></option>
+                    <option><a class="dropdown-item"  >Godhra</a></option>
+                    <option><a class="dropdown-item"  >Gondal</a></option>
+                    <option><a class="dropdown-item"  >Jamnagar</a></option>
+                    <option><a class="dropdown-item"  >Junagadh</a></option>
+                    <option><a class="dropdown-item"  >Jetpur</a></option>
+                    <option><a class="dropdown-item"  >Kalol</a></option>
+                    <option><a class="dropdown-item"  >Mehsana</a></option>
+                    <option><a class="dropdown-item"  >Morbi</a></option>
+                    <option><a class="dropdown-item"  >Nadiad</a></option>
+                    <option><a class="dropdown-item"  >Navsari</a></option>
+                    <option><a class="dropdown-item"  >Palanpur</a></option>
+                    <option><a class="dropdown-item"  >Patan</a></option>
+                    <option><a class="dropdown-item"  >Porbandar</a></option>
+                    <option><a class="dropdown-item"  >Rajkot</a></option>
+                    <option><a class="dropdown-item"  >Surat</a></option>
+                    <option><a class="dropdown-item"  >Surendranagar</a></option>
+                    <option><a class="dropdown-item"  >Vadodara</a></option>
+                    <option><a class="dropdown-item"  >Valsad</a></option>
+                    <option><a class="dropdown-item"  >Vapi</a></option>
+                    <option><a class="dropdown-item"  >Veraval</a></option>
+                    
+                  </ul>
+            </select>
+            <input style="
+                  background: #243b55;
+                  color: #fff;
+                  padding: 5px;
+                  border: 0;
+                " type="submit" value="Submit" />
+            </div>
+        </form>
+        </div>
+        <img src="/static/images/graphs/feedback_graph.png"/>
+    </center> 
+    
+</body>
+</html>

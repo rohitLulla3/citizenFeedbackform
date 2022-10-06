@@ -1,0 +1,24 @@
+{% extends "base.html" %} 
+{% load static %} 
+{% block head %} <link rel="stylesheet" href="{% static 'css/otp.css' %}"> {% endblock %}
+{% block title %} otp verification {% endblock %}  
+{% block content %}
+<div class="login-box">
+  <h2>Login</h2>
+  <form method="post" >
+    {% csrf_token %}
+    <div class="user-box">
+      <input type="text" name="otp" required="" />
+      <label>OTP</label>
+    </div>
+
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <button type="submit" name="Submit">Verify</button>
+  </form>
+</div>
+{% endblock %}
+
+{% block js %} {% endblock%}

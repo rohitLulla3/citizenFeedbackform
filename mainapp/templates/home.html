@@ -1,0 +1,43 @@
+{% extends 'base.html' %} {% load static %} 
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/home.css' %}" />
+{% endblock %} 
+{% block title %} OTP Verification {% endblock %} 
+{% block content %}
+<div class="main-block">
+  <center><h1 style="color: white">Citizen Feedback Form</h1></center>
+  <!-- <div class="btn-block">
+      <button type="button" href="/adm">Login as Admin</button>
+    </div> -->
+
+  <form action="/" method="post">
+    {% csrf_token %}
+    <div class="info"></div>
+
+    <div class="login-box">
+      <h2>Login</h2>
+      <form method="post" action="otp.html" autocomplete="off">
+        <div class="user-box">
+          <input type="email" name="email" required="" autocomplete="off"/>
+          <label>Enter your Email</label>
+        </div>
+
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <button type="submit" name="Submit">Send OTP</button>
+      </form>
+    </div>
+
+    
+  </form>
+</div>
+{% endblock %} 
+{% block js %}
+<script>
+  const params = new URL(window.location.href).searchParams;
+  var loc = params.get("location");
+  document.getElementById("city").value = loc;
+</script>
+{% endblock %}
