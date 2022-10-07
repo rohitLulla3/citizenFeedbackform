@@ -47,7 +47,6 @@ def generate_qrcode(loc):
     generated.save(f"mainapp/static/images/qrcodes/{loc}.png")
 
 
-
 def generate_graph(cities, negative_points, positive_points):
     x=np.arange(len(cities))
     plt.bar(x -0.2,positive_points,0.4,color='g',edgecolor='green',label="postive feedbacks")
@@ -56,6 +55,18 @@ def generate_graph(cities, negative_points, positive_points):
     plt.ylabel("Number of feedbacks")
     plt.title("Type of feedback")
     plt.legend()
-    plt.xticks(x, cities)
+    plt.xticks(np.arange(len(cities)) +1 ,5.0,cities)
     plt.savefig('mainapp/static/images/graphs/feedback_graph.png')
     plt.close()
+
+
+def generate_piechart(city,pos,neg):
+    feedback = ["positive","Negative"]
+    feed=[pos,neg]
+    fig = plt.figure(figsize = (10 , 7))
+    #fig2=plt.figure(figsize = (10,7))
+    plt.pie(feed, labels = feedback,autopct='%1.1f%%')
+    plt.title(city)
+    plt.savefig('mainapp/static/images/graphs/feedback_graph.png')
+    plt.close()
+

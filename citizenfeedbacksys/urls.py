@@ -16,7 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path,include
 
-from mainapp.views import bar_graph, feedbacks, home,adm,mainadm,otp_verify,feedback
+from mainapp.views import bar_graph, home,adm,mainadm,otp_verify,feedback
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -26,6 +26,6 @@ urlpatterns = [
     path('otp/',otp_verify,name='otp'),
     path('captcha',include("captcha.urls")),
     path('feedback/',feedback,name='fb_form'),
-    path('feedbacks/',feedbacks,name='feedbacks'),
+    # path('feedbacks/',feedbacks,name='feedbacks'),
     path('bar-graph/',bar_graph,name='bar_graph'),
 ]
