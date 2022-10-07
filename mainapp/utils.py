@@ -1,32 +1,32 @@
+import datetime as dt
 import qrcode 
 import random
-import smtplib
+from random import randint
 from django.conf import settings
 from .models import VerificationCodes
 import mpld3
 import matplotlib
-matplotlib.use('Agg')
 import matplotlib.pyplot as plt  
 import numpy as np
 
-def send_email(to_email, message):
-    s = smtplib.SMTP('smtp.gmail.com', 587)
-    s.starttls()
-    s.login(settings.FROM_EMAIL, settings.EMAIL_PASSWORD)
-    s.sendmail('Test message',to_email, message)
+# def send_email(to_email, message):
+#     s = smtplib.SMTP('smtp.gmail.com', 587)
+#     s.starttls()
+#     s.login(settings.FROM_EMAIL, settings.EMAIL_PASSWORD)
+#     s.sendmail('Test message',to_email, message)
 
 
-def send_otp(email):
-    rand=random.randint(1000,9999)
+# def send_otp(email):
+#     rand=random.randint(1000,9999)
     
-    # To add the random otp in our table 
-    VerificationCodes.objects.create(
-            email = email,
-            otp = rand,
-        )
-    msg=f"Your One Time Password(OTP) is {rand}"
+#     # To add the random otp in our table 
+#     VerificationCodes.objects.create(
+#             email = email,
+#             otp = rand,
+#         )
+#     msg=f"Your One Time Password(OTP) is {rand}"
 
-    send_email(to_email=email, message=msg)
+#     send_email(to_email=email, message=msg)
 
 def feedback_type(overall,servicing,behaviour):
     rating = int(overall) + int(servicing) + int(behaviour)
@@ -58,6 +58,7 @@ def generate_graph(cities, negative_points, positive_points):
     plt.xticks(x,cities)
     plt.savefig('mainapp/static/images/graphs/feedback_graph.png')
     plt.close()
+# matplotlib.use('Agg')
 
 
 def generate_piechart(city,pos,neg):
@@ -70,3 +71,31 @@ def generate_piechart(city,pos,neg):
     plt.savefig('mainapp/static/images/graphs/feedback_graph.png')
     plt.close()
 
+def send_otp(phone):
+    
+
+    generated_otp=random.randint(0000,9999)
+    VerificationCodes.objects.create(
+             phone = phone,
+             otp = generated_otp,
+         )
+    try:
+        import pywhatkit
+    except:
+        pass
+
+    try:
+        
+        number = str(phone)
+        numb1 = '+91' + number
+        hour = dt.datetime.now()
+        
+        hours = hour.hour
+
+        min = hour.minute
+        min1 = min + 1
+        pywhatkit.sendwhatmsg(numb1, "*GUJARAT POLICE DEPARTMENT*\n\nYOUR OTP IS : "+str(generated_otp), hours, min1)
+            # sending whatsapp msg to registered phone number
+    except:
+        print("internet lost")
+        

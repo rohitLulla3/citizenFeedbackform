@@ -14,29 +14,29 @@ from .models import Feedback, VerificationCodes
 
 def home(request):
     if request.method == "POST":
-        email = request.POST['email']
-        request.session['email'] = email
-        send_otp(email)
+        phone = request.POST['phone']
+        request.session['phone'] = phone
+        send_otp(phone)
         return HttpResponseRedirect("/otp")
 
     return render(request,'home.html')
     
 def otp_verify(request):
-    if not request.session.get("email"):
+    if not request.session.get("phone"):
         return HttpResponseRedirect("/")
 
     if request.method == 'POST':
         otp = request.POST['otp']
-        email = request.session['email']
-        print("➡ email :", email)
-        verification_code = VerificationCodes.objects.filter(email=email,otp = otp).last()
+        phone = request.session['phone']
+        print("➡ email :", phone)
+        verification_code = VerificationCodes.objects.filter(phone=phone,otp = otp).last()
         print("➡ verification_code :", verification_code)
 
         if verification_code:
             verification_code.delete()
             messages.info(request, "You are successfully logged in.")
             request.session["otp_verified"] = True
-            del request.session['email']
+            del request.session['phone']
             return HttpResponseRedirect("/feedback")
     return render(request, 'otp.html')
 
