@@ -1,7 +1,7 @@
 from pstats import Stats
 from django.shortcuts import render, HttpResponse, HttpResponseRedirect
 from django.contrib import messages
-from .utils import generate_graph, generate_qrcode, send_otp,feedback_type
+from .utils import generate_graph, generate_piechart, generate_qrcode, send_otp,feedback_type
 from mainapp.forms import MyLoginForm
 from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.decorators import login_required
@@ -104,10 +104,10 @@ def feedback(request):
 
     return render(request,'feedback.html')
 
-def feedbacks(request):
-    data = Feedback.objects.all().filter(type_feedback = 'positive')
-    print(data)
-    return HttpResponse(data)
+# def feedbacks(request):
+#     data = Feedback.objects.all().filter(type_feedback = 'positive')
+#     print(data)
+#     return HttpResponse(data)
 
 def bar_graph(request):
 
@@ -117,6 +117,7 @@ def bar_graph(request):
     cities = []
     if request.method == 'POST':
         cities = request.POST.getlist('site')
+        pie_city = request.POST['city']
     
         for city in cities:
             negative = feedbacks.filter(city__icontains=city.lower(), type_feedback="negative")
@@ -126,5 +127,6 @@ def bar_graph(request):
             pos_points.append(positive.count())
 
         generate_graph(cities=cities, negative_points=neg_points, positive_points=pos_points)
+        generate_piechart(pie_city,)
 
     return render(request, "graph.html")
