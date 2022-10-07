@@ -55,7 +55,7 @@ def generate_graph(cities, negative_points, positive_points):
     plt.ylabel("Number of feedbacks")
     plt.title("Type of feedback")
     plt.legend()
-    plt.xticks(np.arange(len(cities)) +1 ,5.0,cities)
+    plt.xticks(x,cities)
     plt.savefig('mainapp/static/images/graphs/feedback_graph.png')
     plt.close()
 

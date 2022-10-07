@@ -1,34 +1,57 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block head %} <link rel="stylesheet" href="{% static 'css/feedback.css' %}">{% endblock %}
 {% block title %} Feedback Form {% endblock %}
-{% block content%}
-<section>
-    <div class="rt-container">
-      <div class="col-rt-12">
-        <div class="Scriptcontent">
-          <div class="feedback">
-            <center>
-              {% if messages %}
-              {% for message in messages %}
-              {{ message }}
-              {% endfor %}
-              {% endif %}
-              <br>
-              <img src="{% static 'images/edit.png' %}" alt="">
-              <h1>Feedback Form</h1>
-              <h4>
-                Please rate your service experience for the following
-                parameters
-              </h4>
-            </center>
-            <form method="post" >
-              {% csrf_token %}
+{% block head%}
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+<!--===============================================================================================-->
+	<link rel="icon" type="image/png" href="{% static 'images/icons/favicon.ico' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'fonts/font-awesome-4.7.0/css/font-awesome.min.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'vendor/animate/animate.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'vendor/css-hamburgers/hamburgers.min.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'vendor/animsition/css/animsition.min.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'vendor/select2/select2.min.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'vendor/daterangepicker/daterangepicker.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'css/util.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/main2.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/feedback.css' %}">
+<!--===============================================================================================-->
+{% endblock %}
+{% block content %}
+
+
+	<div class="container-contact100">
+    <br>
+		<div class="wrap-contact100">
+    <img class="watermarked" src="{% static 'images/edit.png' %}" alt="Photo" height="55%" width="55%">
+
+      <center>
+        {% if messages %}
+        {% for message in messages %}
+        {{ message }}
+        {% endfor %}
+        {% endif %}
+        <br>
+        
+        <b><h3>Feedback Form</h3></b>
+        <br>
+      </center>
+			<form class="contact100-form validate-form" method="post">
+				{% csrf_token %}
 
               
               <div class="labels">
                 <label for="dropdown"
-                  >1. How do you come to the police station?</label
+                  >1. How do you come to the police station? /<br> आप थाने में किस सन्दर्भ से आए थे?</label
                 ><br><br>
               </div>
               <div class="input-tab">
@@ -46,7 +69,7 @@
               <div class="labels">
                 <label for="dropdown"
                   >2. After how much time u were heard in police
-                  station?</label
+                  station? /<br> कितने समय के बाद आपको थाने में सुना गया?</label
                 ><br><br>
               </div>
               <div class="input-tab">
@@ -60,7 +83,7 @@
               </div>
               <br />
               <hr />
-              <label>3. Your overall experience with us ?</label><br />
+              <label>3. Your overall experience with us ? /<br> हमारे साथ आपका समग्र अनुभव? </label><br />
 
               <span class="star-rating">
                 <input type="radio" name="rating1" value="1" /><i></i>
@@ -74,7 +97,7 @@
               <hr class="survey-hr" />
               <label
                 >4. Friendliness and courtesy shown to you servicing
-                you</label
+                you /<br>आपकी सेवा करते हुए आपको दिखाई गई मित्रता और शिष्टाचार? </label
               ><br />
               <span class="star-rating">
                 <input type="radio" name="rating2" value="1" /><i></i>
@@ -86,7 +109,7 @@
 
               <div class="clear"></div>
               <hr class="survey-hr" />
-              <label>5. Behaviour</label><br />
+              <label>5. Behaviour/ <br> व्‍यवहार</label><br />
               <span class="star-rating">
                 <input type="radio" name="rating3" value="1" /><i></i>
                 <input type="radio" name="rating3" value="2" /><i></i>
@@ -94,33 +117,73 @@
                 <input type="radio" name="rating3" value="4" /><i></i>
                 <input type="radio" name="rating3" value="5" /><i></i> </span
               ><br /><hr>
-              <label >6. Name of Police Authority who served you </label><br><br>
+              <label >6. Name of Police Authority who served you / <br> उस पुलिस अधिकारी का नाम जिसने आपकी सेवा की</label><br><br>
                 <input type="text" name="police_name" placeholder="optional">
                 <br>
               <div class="clear"></div>
               <hr class="survey-hr" />
               <label for="m_3189847521540640526commentText"
-                >7. Describe your expierience:</label
+                >7. Describe your expierience: / अपने अनुभव का वर्णन करें:</label
               ><br /><br>
               <textarea cols="75" name="description" rows="5" placeholder="Describe your expierience..."></textarea>
               <br />
               <div class="clear"></div>
-              <input
-                style="
-                  background: #243b55;
-                  color: #fff;
-                  padding: 12px;
-                  border: 0;
-                "
-                type="submit"
-                value="Submit your review"
-              />&nbsp;
+
+              
+              <div class="container-contact100-form-btn">
+                <div class="wrap-contact100-form-btn">
+                  <div class="contact100-form-bgbtn"></div>
+                  <button class="contact100-form-btn">
+                    <span>
+                      Submit
+                      <i class="fa fa-long-arrow-right m-l-7" aria-hidden="true"></i>
+                    </span>
+                  </button>
+                </div>
+              </div>
+
+			</form>
+		</div>
+	</div>
 
 
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-  {% endblock %}
+
+	<div id="dropDownSelect1"></div>
+
+  {% block js %}
+
+<!--===============================================================================================-->
+	<script src="{% static 'vendor/jquery/jquery-3.2.1.min.js' %}"></script>
+<!--===============================================================================================-->
+	<script src="{% static 'vendor/animsition/js/animsition.min.js' %}"></script>
+<!--===============================================================================================-->
+	<script src="{% static 'vendor/bootstrap/js/popper.js' %}"></script>
+	<script src="{% static 'vendor/bootstrap/js/bootstrap.min.js' %}"></script>
+<!--===============================================================================================-->
+	<script src="{% static 'vendor/select2/select2.min.js' %}"></script>
+	<script>
+		$(".selection-2").select2({
+			minimumResultsForSearch: 20,
+			dropdownParent: $('#dropDownSelect1')
+		});
+	</script>
+<!--===============================================================================================-->
+	<script src="{% static 'vendor/daterangepicker/moment.min.js' %}"></script>
+	<script src="{% static 'vendor/daterangepicker/daterangepicker.js' %}"></script>
+<!--===============================================================================================-->
+	<script src="{% static 'vendor/countdowntime/countdowntime.js' %}"></script>
+<!--===============================================================================================-->
+	<script src="{% static 'js/main.js' %}"></script>
+
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-23581568-13"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-23581568-13');
+</script>
+{% endblock %}
+
+{% endblock %}
