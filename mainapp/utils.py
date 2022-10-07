@@ -4,7 +4,7 @@ import random
 from random import randint
 from django.conf import settings
 from .models import VerificationCodes
-import mpld3
+import termcolor
 import matplotlib
 import matplotlib.pyplot as plt  
 import numpy as np
@@ -47,28 +47,49 @@ def generate_qrcode(loc):
     generated.save(f"mainapp/static/images/qrcodes/{loc}.png")
 
 
-def generate_graph(cities, negative_points, positive_points):
-    x=np.arange(len(cities))
-    plt.bar(x -0.2,positive_points,0.4,color='g',edgecolor='green',label="postive feedbacks")
-    plt.bar(x +0.2,negative_points,0.4,color='r',edgecolor='red',label="negative feedbacks")
-    plt.xlabel("City")
-    plt.ylabel("Number of feedbacks")
-    plt.title("Type of feedback")
-    plt.legend()
-    plt.xticks(x,cities)
+def generate_graph(cities,total_feedbacks):
+    cities = cities
+    feedback=total_feedbacks
+    fig = plt.figure(figsize = (10, 5),facecolor='#BCB88A')
+    plt.rcParams.update({'font.size' : 13})
+    # creating the bar plot
+    plt.bar(cities,feedback, edgecolor ='BLACK',color ='#254117',width = 0.4)
+    plt.xlabel("Cities",fontweight='bold')
+    plt.ylabel("No. of Feedback",fontweight='bold')
+    plt.title("Total feedbacks of cities",fontweight='bold')
+    # plt.show()
     plt.savefig('mainapp/static/images/graphs/feedback_graph.png')
     plt.close()
 # matplotlib.use('Agg')
 
 
 def generate_piechart(city,pos,neg):
-    feedback = ["positive","Negative"]
-    feed=[pos,neg]
-    fig = plt.figure(figsize = (10 , 7))
-    #fig2=plt.figure(figsize = (10,7))
-    plt.pie(feed, labels = feedback,autopct='%1.1f%%')
-    plt.title(city)
-    plt.savefig('mainapp/static/images/graphs/feedback_graph.png')
+    
+    feedback=["Postive Feedback","Negative Feedback"]
+    feedbackvalues=[pos,neg]
+    # Creating explode data
+    explode = (0.1, 0.2)
+    # Creating color parameters
+    colors = ( "orange", "BLUE")
+    # Wedge properties
+    wp = { 'linewidth' : 2, 'edgecolor' : "white" }
+    # Creating autocpt arguments
+    def func(pct, allvalues):
+        absolute = int(pct / 100.*np.sum(allvalues))
+        return "{:.1f}%".format(pct, absolute) 
+        # Creating plot
+    fig, ax = plt.subplots(figsize =(10, 7))
+    plt.rcParams.update({'font.size' : 11})
+    fig.patch.set_facecolor("White")
+    wedges, texts, autotexts = ax.pie(feedbackvalues,autopct = lambda pct: func(pct,feedbackvalues),explode = explode,labels = feedback,shadow = True,colors = colors,startangle = 90,wedgeprops = wp,textprops = dict(color ="WHITE"))
+        # Adding legend
+    ax.legend(wedges,feedback,title =city,loc ="center left",bbox_to_anchor =(1, 0))
+    plt.setp(autotexts, size = 15, weight ="bold")
+    print("djba")
+    ax.set_title(city) 
+        # show plot
+    # plt.show()
+    plt.savefig('mainapp/static/images/graphs/feedback_pichart.png')
     plt.close()
 
 def send_otp(phone):
@@ -91,7 +112,7 @@ def send_otp(phone):
         hour = dt.datetime.now()
         
         hours = hour.hour
-
+ 
         min = hour.minute
         min1 = min + 1
         pywhatkit.sendwhatmsg(numb1, "*GUJARAT POLICE DEPARTMENT*\n\nYOUR OTP IS : "+str(generated_otp), hours, min1)

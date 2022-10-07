@@ -1,7 +1,7 @@
 from pstats import Stats
 from django.shortcuts import render, HttpResponse, HttpResponseRedirect
 from django.contrib import messages
-from .utils import generate_graph, generate_qrcode, send_otp,feedback_type
+from .utils import generate_graph, generate_qrcode, send_otp,feedback_type, generate_piechart
 from mainapp.forms import MyLoginForm
 from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.decorators import login_required
@@ -62,17 +62,21 @@ def adm(request):
 @login_required
 def mainadm(request):
     display_qr=False
+    feedbacks = Feedback.objects.all()
+    total_feedbacks = feedbacks.count()
     if request.method == 'POST':
 
+        
+        print("➡ total_feedbacks :", total_feedbacks)
         city = request.POST['site']
         print("➡ city :", city)
         generate_qrcode(city)
         display_qr=False
         if city:
             display_qr = True
-        context = {"city":city,'show_qr':display_qr}
+        context = {"city":city,'show_qr':display_qr, 'total_feedbacks':total_feedbacks}
     else:
-        context = {'show_qr':display_qr}    
+        context = {'show_qr':display_qr,'total_feedbacks':total_feedbacks}    
 
     return render(request,'admin.html',context)
     
@@ -82,7 +86,7 @@ def feedback(request):
     data = request.GET
     city = data.get("city")
     if city:
-        request.session["city"] = city
+        request.session["city"] = city 
 
 
     if not request.session.get("otp_verified"):
@@ -99,6 +103,8 @@ def feedback(request):
         type_feedback = feedback_type(overall,servicing,behaviour)
         rec = Feedback(reason_to_come = how_do_you_come,waiting_time= waiting_time, overall=overall, behaviour=behaviour, servicing = servicing, type_feedback=type_feedback, city=request.session["city"],police_name=police_name, feedback=feedback)
         rec.save()
+        
+        
         del request.session["otp_verified"]
         messages.success(request,"Form Successfully submitted!!")
 
@@ -112,21 +118,21 @@ def feedback(request):
 def bar_graph(request):
 
     feedbacks = Feedback.objects.all()
-    neg_points = []
-    pos_points = []
+    
+    total_feedbacks = []
     cities = []
     if request.method == 'POST':
         cities = request.POST.getlist('site')
-        # pie_city = request.POST['city']
-    
+        pie_city = request.POST['city']
         for city in cities:
-            negative = feedbacks.filter(city__icontains=city.lower(), type_feedback="negative")
-            neg_points.append(negative.count())
+            total_feeds = feedbacks.filter(city=city)
+            total_feedbacks.append(total_feeds.count())
 
-            positive = feedbacks.filter(city__icontains=city.lower(), type_feedback="positive")
-            pos_points.append(positive.count())
+        negative = feedbacks.filter(city__icontains=pie_city.lower(), type_feedback="negative")
 
-        generate_graph(cities=cities, negative_points=neg_points, positive_points=pos_points)
-        # generate_piechart(pie_city,positive.count(),negative.count())
+        positive = feedbacks.filter(city__icontains=pie_city.lower(), type_feedback="positive")
+
+        generate_graph(cities=cities,total_feedbacks=total_feedbacks)
+        generate_piechart(pie_city,positive.count(),negative.count())
 
     return render(request, "graph.html")
